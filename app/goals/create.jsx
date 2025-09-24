@@ -6,7 +6,7 @@ import { useRouter } from 'expo-router'
 
 const Create = () => {
   const [goal, setGoal] = useState('')
-  const { createGoal, useMockData } = useGoals();
+  const { createGoal } = useGoals();
   const router = useRouter
 
   const handleSubmit = async () => {
@@ -39,9 +39,6 @@ const Create = () => {
       <Pressable onPress={handleSubmit} style={styles.button}>
         <Text style={{color: 'white'}}>Add New Goal</Text>
       </Pressable>
-      {useMockData && (
-        <Text style={styles.mockDataText}>Using mock data for testing</Text>
-      )}
     </SafeAreaView>
   )
 }

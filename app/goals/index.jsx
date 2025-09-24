@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useGoals } from '../../hooks/useGoals'
 
 const Goals = () => {
-  const { goals, loading, deleteGoal, useMockData } = useGoals();
+  const { goals, loading, deleteGoal } = useGoals();
 
   const handleDelete = async (id) => {
     await deleteGoal(id);
@@ -22,7 +22,7 @@ const Goals = () => {
       <SafeAreaView style={styles.container}>
         <Text style={styles.title}>Your Goals</Text>
         <Text style={styles.noGoals}>
-          {useMockData ? "Using mock data. No goals yet. Add one to get started!" : "No goals yet. Add one to get started!"}
+          No goals yet. Add one to get started!
         </Text>
       </SafeAreaView>
     );
