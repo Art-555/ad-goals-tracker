@@ -1,12 +1,28 @@
 import { useState } from 'react'
-import { StyleSheet, Text, TextInput, Pressable } from 'react-native'
+import { StyleSheet, Text, TextInput, Pressable, Keyboard } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useGoals } from '../../hooks/useGoals'
+import { useRouter } from 'expo-router'
 
 const Create = () => {
   const [goal, setGoal] = useState('')
-  
-  const handleSubmit = async () => {
+  const { createGoal, useMockData } = useGoals();
+  const router = useRouter
 
+  const handleSubmit = async () => {
+    if (goal.trim()) {
+      try {
+        await createGoal({ title: goal, completed: false });
+        console.log("Goal added successfully");
+        setGoal('')
+        Keyboard.dismiss()
+        router.push('/goals')
+      } catch (error) {
+        console.error("Error adding goal:", error);
+        // Show error message to user
+        alert("Error adding goal. Please try again.");
+      }
+    }
   }
 
   return (
@@ -23,6 +39,9 @@ const Create = () => {
       <Pressable onPress={handleSubmit} style={styles.button}>
         <Text style={{color: 'white'}}>Add New Goal</Text>
       </Pressable>
+      {useMockData && (
+        <Text style={styles.mockDataText}>Using mock data for testing</Text>
+      )}
     </SafeAreaView>
   )
 }
@@ -50,5 +69,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#21cc8d',
     color: 'white',
     borderRadius: 8,
+  },
+  mockDataText: {
+    marginTop: 10,
+    fontSize: 12,
+    color: '#666',
+    textAlign: 'center',
   }
 })
+
